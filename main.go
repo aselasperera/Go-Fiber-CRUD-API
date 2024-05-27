@@ -11,7 +11,7 @@ func main() {
 
 	database.InitDatabase()
 
-	// Define a root route
+	// root route
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Welcome to the Go Fiber CRUD API!")
 	})
