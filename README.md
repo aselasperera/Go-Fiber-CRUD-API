@@ -23,9 +23,3 @@ This is a simple RESTful API built with [Go Fiber](https://gofiber.io) for handl
 ```bash
 git clone https://github.com/aselasperera/go-fiber-crud-api.git
 cd go-fiber-crud-api
-
-2. Install dependencies
-go mod tidy
-
-3. Run the application
-go run main.go  The server will start on http://localhost:3000.
