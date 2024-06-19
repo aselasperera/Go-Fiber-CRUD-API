@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/aselasperera/go-fiber-crud-api/database"
+	"github.com/aselasperera/go-fiber-crud-api/dbConfig"
 	"github.com/aselasperera/go-fiber-crud-api/routes"
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +9,7 @@ import (
 func main() {
 	app := fiber.New()
 
-	database.InitDatabase()
+	dbConfig.ConnectToMongoDB()
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Welcome to the Go Fiber CRUD API!")
