@@ -1,19 +1,39 @@
 package database
 
 import (
-	"github.com/aselasperera/go-fiber-crud-api/models"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"context"
+	"fmt"
+	"log"
+
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var DB *gorm.DB
+var (
+	DB             *mongo.Database
+	UserCollection *mongo.Collection
+)
 
 func InitDatabase() {
-	var err error
-	DB, err = gorm.Open("sqlite3", "test.db")
+	fmt.Println("Connecting to mongo cluster")
+	ctx := context.Background()
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(DATABASE_URL))
 	if err != nil {
-		panic("failed to connect database")
+		log.Fatal(err)
 	}
 
-	DB.AutoMigrate(&models.User{})
+	//Ping database
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Successfully connected to mongo cluster")
+	DATABASE = client.Database(DATABASE_NAME)
 }
+
+var DATABASE *mongo.Database
+
+const DATABASE_URL = "mongodb+srv://cgaas:rvyuMzkZXfLp52m7@cgaas.bbsin5h.mongodb.net/?retryWrites=true&w=majority"
+
+const DATABASE_NAME = "Deal-APP234"
